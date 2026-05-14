@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lưu bút của tớ 🌸</title>
+    
+    <!-- Nhập font từ Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&family=EB+Garamond:ital,wght@0,400;1,400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Bảng màu hồng phấn aesthetic */
+            --bg-color: #fff0f3; /* Hồng phấn cực nhạt */
+            --text-color: #ff4d6d; /* Hồng đậm để nổi bật chữ */
+            --accent-color: #ffb3c1;
+            /* Thiết lập Font: Ivy Mode thường giống Playfair Display hoặc Serif cao cấp */
+            --font-main: "IvyMode", "Playfair Display", "Garamond", serif;
+            --font-body: "Nunito", "Google Sans", sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            font-family: var(--font-main);
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .icon-decor {
+            font-size: 1.5rem;
+            margin: 10px;
+            opacity: 0.8;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+        }
+
+        /* Aesthetics Icons xung quanh */
+        .floating-icons {
+            position: fixed;
+            z-index: -1;
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+
+        /* Layout phát nhạc trước rồi đến Form */
+        .spotify-box {
+            width: 100%;
+            margin-bottom: 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.1);
+        }
+
+        .form-box {
+            width: 100%;
+            border-radius: 20px;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.05);
+        }
+
+        iframe {
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mấy cái icon bay bay xung quanh cho aesthetic -->
+    <div class="floating-icons" style="top: 10%; left: 5%;">✨</div>
+    <div class="floating-icons" style="top: 20%; right: 8%;">☁️</div>
+    <div class="floating-icons" style="bottom: 15%; left: 10%;">🎀</div>
+    <div class="floating-icons" style="bottom: 5%; right: 5%;">🧸</div>
+    <div class="floating-icons" style="top: 50%; left: 2%;">🕯️</div>
+
+    <div class="container">
+        <h1>Souls don't meet by accident</h1>
+        <p style="font-family: 'EB Garamond', serif; font-size: 1.2rem; font-style: italic;">
+            "Gặp gỡ là định mệnh, chia ly là để hẹn ngày gặp lại."
+        </p>
+        
+        <div class="icon-decor">˚ ༘♡ ⋆｡˚ ☁︎ 🩰</div>
+
+        <!-- 1. PHÁT NHẠC TRƯỚC -->
+        <div class="spotify-box">
+            <!-- DÁN LINK NHÚNG SPOTIFY CỦA CẬU VÀO ĐÂY -->
+            <iframe style="border-radius:12px" 
+                src="https://open.spotify.com/playlist/5cKfvCrk8D8sxTz4CYHDFX" 
+                width="100%" height="152" frameBorder="0" allowfullscreen="" 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                loading="lazy">
+            </iframe>
+        </div>
+
+        <div class="icon-decor">📖 𐙚 🕯️</div>
+
+        <!-- 2. GOOGLE FORMS SAU -->
+        <div class="form-box">
+            <!-- DÁN LINK GOOGLE FORM CỦA CẬU VÀO ĐÂY -->
+            <iframe src="https://forms.gle/tqPCB5fy87DAHPBx6" 
+                width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">
+                Đang tải...
+            </iframe>
+        </div>
+
+        <p style="margin-top: 30px; font-size: 0.8rem; opacity: 0.6;">
+            Made with ♡ by [Tên của cậu] | 2026
+        </p>
+    </div>
+
+</body>
+</html>
