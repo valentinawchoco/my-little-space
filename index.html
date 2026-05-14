@@ -4,18 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>my memory book 2326 🌸</title>
-    
-    <!-- Link Font từ Google -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&family=EB+Garamond:ital,wght@0,400;1,400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --font-main: "Playfair Display", "Garamond", serif;
-            --font-body: "Nunito", "Google Sans", sans-serif;
+            --font-main: "Playfair Display", serif;
+            --font-body: "Nunito", sans-serif;
         }
 
+        /* Nền Gradient Đen - Hồng */
         body {
-            /* Gradient từ Đen thẫm xuống Hồng phấn */
             background: linear-gradient(180deg, #000000 0%, #ff85a1 45%, #fff0f3 100%);
             background-attachment: fixed;
             color: #ffffff;
@@ -26,12 +24,32 @@
             margin: 0;
             padding: 60px 20px;
             min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Tạo hiệu ứng lấp lánh (Blink Blink) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+            z-index: 0;
+            opacity: 0.6;
+            animation: blink 3s infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes blink {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.8; }
         }
 
         .container {
             width: 100%;
             max-width: 650px;
             text-align: center;
+            z-index: 1; /* Để nội dung nổi lên trên lớp lấp lánh */
         }
 
         h1 {
@@ -41,7 +59,7 @@
             font-weight: 400;
             color: #ffb3c1; 
             margin-bottom: 10px;
-            text-shadow: 2px 2px 15px rgba(255, 179, 193, 0.4);
+            text-shadow: 2px 2px 15px rgba(255, 179, 193, 0.6);
         }
 
         .quote {
@@ -50,7 +68,6 @@
             font-size: 1.2rem;
             opacity: 0.9;
             margin-bottom: 40px;
-            color: #ffffff;
         }
 
         .spotify-box {
@@ -70,13 +87,9 @@
             margin-top: 20px;
         }
 
-        iframe {
-            border-radius: 15px;
-        }
-
         .footer {
             margin-top: 50px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #7a5980;
             opacity: 0.8;
             font-style: italic;
@@ -86,26 +99,20 @@
 <body>
 
     <div class="container">
-        <!-- Đã thay đổi tiêu đề chính -->
         <h1>my memory book 2326</h1>
-        
-        <!-- Đã thay đổi câu quote -->
         <p class="quote">"souls don't meet by accident."</p>
 
-        <!-- PLAYLIST SPOTIFY CỦA NẤM -->
         <div class="spotify-box">
             <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5cKfvCrk8D8sxTz4CYHDFX?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
 
-        <p style="color: #ffffff; font-weight: bold; margin-bottom: 20px; font-style: italic; opacity: 0.9;">˗ˏˋcảm ơn tình yêu đã ghé thăm ˎˊ˗</p>
+        <p style="color: #ffffff; font-weight: bold; margin-bottom: 20px; font-style: italic; opacity: 0.9;">˗ˏˋ cảm ơn tình yêu đã ghé thăm ˎˊ˗</p>
 
-        <!-- GOOGLE FORMS -->
         <div class="form-box">
-            <!-- CẬU NHỚ DÁN LINK FORM VÀO ĐÂY NHÉ -->
+            <!-- NẤM DÁN LINK FORM VÀO ĐÂY LẦN CUỐI NHÉ -->
             <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd7WfwkEaRD3xDuzbQ9136JOD6mzlWDCcHDeJsIzJnQINDR3A/viewform" width="100%" height="1000" frameborder="0" marginheight="0" marginwidth="0">Đang tải...</iframe>
         </div>
 
-        <!-- Chân trang của Nấm -->
         <div class="footer">
             made with ♡ by nấm
         </div>
