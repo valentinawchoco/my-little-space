@@ -3,83 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>my little yearbook 2326 🌸</title>
+    <title>my little yearbook 2326🌸</title>
+    
+    <!-- Link Font từ Google -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&family=EB+Garamond:ital,wght@0,400;1,400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --bg-color: #fff0f3; 
-            --text-color: #ff4d6d;
             --font-main: "Playfair Display", "Garamond", serif;
             --font-body: "Nunito", sans-serif;
         }
-        body { body {
-    /* Gradient từ đen (#000000) xuống hồng phấn (#fff0f3) */
-    background: linear-gradient(180deg, #000000 0%, #ffb3c1 50%, #fff0f3 100%);
-    background-attachment: fixed; /* Giữ nền cố định khi cuộn trang */
-    color: #ffffff; /* Đổi chữ trên cùng thành màu trắng cho nổi trên nền đen */
-    font-family: var(--font-body);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0;
-    padding: 40px 20px;
-    text-align: center;
-}
 
-/* Chỉnh lại màu tiêu đề để nổi bật trên nền đen */
-h1 {
-    font-family: var(--font-main);
-    font-size: 3rem;
-    font-style: italic;
-    font-weight: 400;
-    color: #ffb3c1; /* Màu hồng nhạt cho tiêu đề */
-    text-shadow: 2px 2px 10px rgba(255, 179, 193, 0.5); /* Hiệu ứng phát sáng */
-}
+        body {
+            /* Gradient Đen ở trên, Hồng ở dưới */
+            background: linear-gradient(180deg, #000000 0%, #ff85a1 50%, #fff0f3 100%);
+            background-attachment: fixed;
+            color: #ffffff;
+            font-family: var(--font-body);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 60px 20px;
+            min-height: 100vh;
+        }
 
-/* Chỉnh lại màu đoạn văn bản phía dưới */
-p {
-    color: #ffffff;
-}
+        .container {
+            width: 100%;
+            max-width: 650px;
+            text-align: center;
+        }
 
-/* Chỉnh lại cái khung Google Form cho đỡ bị chìm */
-.form-box {
-    width: 100%;
-    max-width: 600px;
-    background: rgba(255, 255, 255, 0.9); /* Trắng mờ để thấy nền gradient phía sau */
-    border-radius: 20px;
-    padding: 10px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    margin-top: 30px;
-} }
-        h1 { font-family: var(--font-main); font-size: 2.5rem; font-style: italic; font-weight: 400; }
-        .spotify-box { width: 100%; max-width: 600px; margin: 20px 0; }
-        .form-box { width: 100%; max-width: 600px; background: white; border-radius: 20px; padding: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .floating-icons { position: fixed; z-index: -1; font-size: 2rem; opacity: 0.3; }
+        h1 {
+            font-family: var(--font-main);
+            font-size: 2.8rem;
+            font-style: italic;
+            font-weight: 400;
+            color: #ffb3c1; /* Màu hồng nhạt nổi trên nền đen */
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 15px rgba(255, 179, 193, 0.4);
+        }
+
+        .quote {
+            font-family: 'EB Garamond', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .spotify-box {
+            width: 100%;
+            margin-bottom: 50px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .form-box {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        iframe {
+            border-radius: 15px;
+        }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 0.8rem;
+            color: #7a5980;
+            opacity: 0.7;
+        }
     </style>
 </head>
 <body>
 
-    <div class="floating-icons" style="top: 10%; left: 5%;">✨</div>
-    <div class="floating-icons" style="top: 20%; right: 8%;">☁️</div>
-    <div class="floating-icons" style="bottom: 15%; left: 10%;">🎀</div>
-    <div class="floating-icons" style="bottom: 5%; right: 5%;">🧸</div>
+    <div class="container">
+        <h1>my yearbook 2326</h1>
+        <p class="quote">"souls don't meet by accident."</p>
 
-    <h1>Souls don't meet by accident</h1>
-    <p style="font-family: 'EB Garamond', serif; font-style: italic;">"những linh hồn không tình cờ gặp nhau."</p>
+        <!-- PHẦN 1: SPOTIFY (Phát trước) -->
+        <div class="spotify-box">
+            <!-- THAY TOÀN BỘ DÒNG IFRAME DƯỚI ĐÂY BẰNG MÃ NHÚNG SPOTIFY DÀI NGOẰNG CỦA CẬU -->
+            <iframe style="border-radius:12px" src="<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5cKfvCrk8D8sxTz4CYHDFX?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
 
-    <!-- CHỖ DÁN LINK SPOTIFY (Cái link dài ngoằng ấy) -->
-    <div class="spotify-box">
-        
-        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5cKfvCrk8D8sxTz4CYHDFX?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <p style="color: #ff4d6d; font-weight: bold; margin-bottom: 15px;">˗ˏˋ Viết cho tớ vài dòng nhé ˎˊ˗</p>
 
+        <!-- PHẦN 2: GOOGLE FORMS (Hiện sau) -->
+        <div class="form-box">
+            <!-- THAY LINK GOOGLE FORM CỦA CẬU VÀO ĐÂY -->
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd7WfwkEaRD3xDuzbQ9136JOD6mzlWDCcHDeJsIzJnQINDR3A/viewform" width="100%" height="900" frameborder="0" marginheight="0" marginwidth="0">Đang tải...</iframe>
+        </div>
+
+        <div class="footer">
+            Made with ♡ by nấm
+        </div>
     </div>
-
-    <!-- CHỖ DÁN LINK GOOGLE FORM -->
-    <div class="form-box">
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd7WfwkEaRD3xDuzbQ9136JOD6mzlWDCcHDeJsIzJnQINDR3A/viewform" width="100%" height="800" frameborder="0">Đang tải...</iframe>
-    </div>
-
-    <p style="margin-top: 30px; font-size: 0.8rem; opacity: 0.6;">Made with ♡ by nấm</p>
 
 </body>
 </html>
