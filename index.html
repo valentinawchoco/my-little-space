@@ -10,9 +10,9 @@
     
     <style>
         :root {
-            --font-main: "Cormorant Garamond", serif; /* Vibe IvyMode sang chảnh */
+            --font-main: "Cormorant Garamond", serif;
             --font-body: "Nunito", sans-serif;
-            --font-quote: "EB Garamond", serif;       /* Vibe hoài niệm, hợp tiếng Việt */
+            --font-quote: "EB Garamond", serif;
             --sparkle-color: #ffe5ec;
         }
 
@@ -54,15 +54,8 @@
             box-shadow: 0 0 10px var(--sparkle-color), 0 0 20px #fff;
         }
 
-        .sparkle:before {
-            width: 100%; height: 20%;
-            top: 40%; left: 0;
-        }
-
-        .sparkle:after {
-            width: 20%; height: 100%;
-            left: 40%; top: 0;
-        }
+        .sparkle:before { width: 100%; height: 20%; top: 40%; left: 0; }
+        .sparkle:after { width: 20%; height: 100%; left: 40%; top: 0; }
 
         @keyframes twinkle {
             0%, 100% { transform: scale(0) rotate(0deg); opacity: 0; }
@@ -76,28 +69,28 @@
         .sp5 { top: 80%; left: 20%; --d: 7s; }
         .sp6 { top: 15%; right: 30%; --d: 3.5s; }
 
-        /* --- GIAO DIỆN MÁY PHÁT NHẠC CUTE KHÔNG HIỆN SPOTIFY --- */
+        /* --- GIAO DIỆN MÁY PHÁT NHẠC MP3 CUSTOM --- */
         .music-player-container {
             width: 100%;
             box-sizing: border-box;
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 18px;
+            border-radius: 25px;
+            padding: 20px;
             margin-bottom: 40px;
             box-shadow: 0 8px 32px 0 rgba(255, 133, 161, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.2);
             text-align: left;
-            cursor: pointer; /* Biến chuột thành hình bàn tay để kích thích bấm vào */
-            transition: transform 0.2s ease;
-        }
-
-        .music-player-container:hover {
-            transform: scale(1.02); /* Di chuột vào hơi phóng to nhẹ cho thích mắt */
         }
 
         .player-layout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Đẩy tên bài và nút playlist ra 2 đầu cực đẹp */
+        }
+
+        .player-left {
             display: flex;
             align-items: center;
             gap: 18px;
@@ -105,8 +98,12 @@
 
         .disc-wrapper {
             position: relative;
-            width: 55px;
-            height: 55px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
         }
 
         .vinyl-disc {
@@ -118,13 +115,27 @@
             border: 2px solid #fff;
             box-shadow: 0 0 10px rgba(0,0,0,0.3);
             animation: rotateDisc 8s linear infinite;
-            animation-play-state: running; /* Đĩa tự quay tăng vibe cute */
+            animation-play-state: paused;
         }
 
         .vinyl-disc img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        .play-btn {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 179, 193, 0.9);
+            border-radius: 50%;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
         }
 
         @keyframes rotateDisc {
@@ -142,19 +153,108 @@
             font-size: 1.3rem;
             font-style: italic;
             color: #ffe5ec;
-            font-weight: 600; /* Làm tên bài hát đậm nét sang trọng */
+            font-weight: 600;
         }
 
         .song-sub {
             font-size: 0.85rem;
             color: #ffffff;
             opacity: 0.7;
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
-        /* GIẤU EM BED SPOTIFY ĐI KHÔNG CHO HIỆN */
-        .spotify-hidden {
-            display: none;
+        /* NÚT DANH SÁCH PHÁT (☰) XINH XẮN */
+        .playlist-toggle-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.6rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: all 0.2s;
+            opacity: 0.8;
+        }
+
+        .playlist-toggle-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* KHUNG PLAYLIST ẨN HIỆN THÔNG MINH */
+        .playlist-tracks {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 0px; /* Mặc định ẩn hoàn toàn */
+            overflow-y: auto;
+            transition: max-height 0.4s ease-out, margin-top 0.4s ease-out; /* Tạo hiệu ứng lướt cực mịn */
+            padding-right: 5px;
+            margin-top: 0px;
+        }
+
+        /* Lớp này dùng để kích hoạt mở rộng playlist khi bấm nút ☰ */
+        .playlist-tracks.show {
+            max-height: 220px; /* Chiều cao tối đa vừa xinh cho thanh cuộn */
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        /* Custom thanh cuộn dọc hợp vibe đen hồng */
+        .playlist-tracks::-webkit-scrollbar {
+            width: 5px;
+        }
+        .playlist-tracks::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+        .playlist-tracks::-webkit-scrollbar-thumb {
+            background: rgba(255, 179, 193, 0.4);
+            border-radius: 10px;
+        }
+
+        /* TỪNG DÒNG BÀI HÁT TRONG DANH SÁCH */
+        .track-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .track-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(3px);
+        }
+
+        .track-item.active {
+            background: rgba(255, 133, 161, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+            color: #ffe5ec;
+        }
+
+        .track-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            max-width: 70%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .track-artist {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            max-width: 25%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         /* --- CẤU TRÚC NỘI DUNG --- */
@@ -169,7 +269,7 @@
             font-family: var(--font-main);
             font-size: 3.5rem;
             font-style: italic;
-            font-weight: 600; /* CHỖ NÀY: Đã chỉnh từ 300 lên 600 để chữ ĐẬM hơn theo ý cậu */
+            font-weight: 600;
             color: #ffb3c1; 
             margin-bottom: 10px;
             text-shadow: 0 0 15px rgba(255, 179, 193, 0.4);
@@ -205,7 +305,7 @@
 </head>
 <body>
 
-    <!-- Các ngôi sao phát sáng phía sau -->
+    <!-- Hiệu ứng sao lấp lánh phía sau -->
     <div class="sparkle-container">
         <div class="sparkle sp1"></div>
         <div class="sparkle sp2"></div>
@@ -216,35 +316,41 @@
     </div>
 
     <div class="container">
-        <!-- Tiêu đề phong cách IvyMode ĐẬM ĐÀ -->
         <h1>my memory book 2326</h1>
-        
-        <!-- Câu quote phong cách EB Garamond -->
         <p class="quote">"souls don't meet by accident."</p>
 
-        <!-- Trình phát nhạc Đĩa Than Siêu Gọn (Không hiện Spotify) -->
-        <div class="music-player-container" onclick="togglePlay()">
+        <!-- CHIẾC MÁY PHÁT NHẠC PLAYLIST 19 BÀI SIÊU ẨN GIẤU -->
+        <div class="music-player-container">
             <div class="player-layout">
-                <div class="disc-wrapper">
-                    <div class="vinyl-disc" id="vinyl">
-                        <!-- NẤM THAY LINK ẢNH ĐĨA VUÔNG CỦA CẬU VÀO ĐÂY NHÉ -->
-                        <img src="https://i.postimg.cc/Nf8G22Ls/46a115939de2ffaf489e4a098ceb36de.jpg" alt="music disc">
+                <div class="player-left">
+                    <!-- Khu vực Đĩa nhạc bấm phát/dừng nhanh -->
+                    <div class="disc-wrapper" onclick="togglePlayPause()">
+                        <div class="vinyl-disc" id="vinyl">
+                            <!-- NẤM THAY LINK ẢNH ĐĨA VUÔNG CỦA CẬU VÀO ĐÂY NHÉ -->
+                            <img src="https://i.postimg.cc/Nf8G22Ls/46a115939de2ffaf489e4a098ceb36de.jpg" alt="music disc">
+                        </div>
+                        <div class="play-btn" id="mainPlayBtn">▶</div>
+                    </div>
+                    <!-- Thông tin bài hát hiện tại -->
+                    <div class="song-info">
+                        <span class="song-title" id="currentTitle">Đang chuẩn bị nhạc...</span>
+                        <span class="song-sub" id="currentArtist">đợi xíu nha m</span>
                     </div>
                 </div>
-                <div class="song-info">
-                    <!-- CẬU TỰ DO ĐỔI TÊN BÀI HÁT / CA SĨ Ở ĐÂY CHO CUTE -->
-                    <span class="song-title">eulogy for 2026 🎧</span>
-                    <span class="song-sub">playlist: niên hoa của tụi mình • bấm để nghe nha</span>
-                </div>
+                
+                <!-- Icon ☰ Thần thánh điều khiển ẩn/hiện danh sách -->
+                <button class="playlist-toggle-btn" onclick="togglePlaylistView()">☰</button>
             </div>
-            
-            <!-- Khung Spotify chứa playlist gốc đã bị giấu đi ẩn danh -->
-            <div class="spotify-hidden">
-                <iframe id="spotify-iframe" src="https://open.spotify.com/embed/playlist/5cKfvCrk8D8sxTz4CYHDFX?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+            <!-- DANH SÁCH 19 BÀI HÁT TỰ ĐỘNG KHỞI TẠO BẰNG CODE (CÓ THANH CUỘN ẨN) -->
+            <div class="playlist-tracks" id="playlistContainer">
+                <!-- Javascript sẽ tự động điền 19 bài hát của cậu vào đây, không cần gõ tay mỏi tay đâu -->
             </div>
+
+            <!-- Thẻ Audio ẩn để phát nhạc -->
+            <audio id="audioPlayer"></audio>
         </div>
 
-        <!-- Dòng chữ cảm ơn phong cách EB Garamond Italic Đậm -->
         <p style="font-family: 'EB Garamond', serif; color: #ffffff; font-weight: bold; margin-bottom: 20px; font-style: italic; opacity: 0.9; font-size: 1.3rem;">˗ˏˋ cảm ơn tình yêu đã ghé thăm ˎˊ˗</p>
 
         <!-- Khung điền Google Form -->
@@ -253,23 +359,112 @@
             <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd7WfwkEaRD3xDuzbQ9136JOD6mzlWDCcHDeJsIzJnQINDR3A/viewform" width="100%" height="1000" frameborder="0">Đang tải...</iframe>
         </div>
 
-        <div class="footer">
-            made with ♡ by nấm
-        </div>
+        <div class="footer">made with ♡ by nấm</div>
     </div>
 
-    <!-- Đoạn Javascript nhỏ để khi bấm vào cái khung là đĩa quay/dừng -->
+    <!-- ĐOẠN JAVASCRIPT THÔNG MINH XỬ LÝ 19 BÀI HÁT CỦA NẤM -->
     <script>
-        function togglePlay() {
-            var disc = document.getElementById('vinyl');
-            if (disc.style.animationPlayState === 'paused') {
+        // Kho dữ liệu 19 bài hát tâm huyết của Nấm
+        const playlist = [
+            { title: "A Little Dream Of Me", artist: "Công Dương, Thảo Tâm", src: "https://files.catbox.moe/fyugsw.mp3" },
+            { title: "Space Song", artist: "Beach House", src: "https://files.catbox.moe/wr7irw.mp3" },
+            { title: "Cảm ơn người đã thức cùng tôi", artist: "Phùng Khánh Linh", src: "https://files.catbox.moe/gjwc2t.mp3" },
+            { title: "Champagne Coast (Piano)", artist: "Valentino Coleman", src: "https://files.catbox.moe/idm15y.mp3" },
+            { title: "có hẹn với thanh xuân", artist: "MONSTAR", src: "https://files.catbox.moe/x9boe1.mp3" },
+            { title: "Innocence [Remastered]", artist: "Daniel Caesar", src: "https://files.catbox.moe/0g9vnv.mp3" },
+            { title: "Di Na Muli THAT Part", artist: "Tiktok Version", src: "https://files.catbox.moe/pkapxa.mp3" },
+            { title: "End Of Beginning", artist: "Djo", src: "https://files.catbox.moe/lkurqw.mp3" },
+            { title: "Where'd All The Time Go", artist: "Dr. Dog", src: "https://files.catbox.moe/kdlk9l.mp3" },
+            { title: "Em Đừng Khóc", artist: "Chillies", src: "https://files.catbox.moe/um1837.mp3" },
+            { title: "Head In The Clouds", artist: "Hayd", src: "https://files.catbox.moe/wzhl6i.mp3" },
+            { title: "Somewhere Only We Know", artist: "Keane", src: "https://files.catbox.moe/o6d53r.mp3" },
+            { title: "Một Thời", artist: "Truant Fu", src: "https://files.catbox.moe/rbhrws.mp3" },
+            { title: "Phép Màu (Đàn Cá Gỗ OST)", artist: "MAYDAYs ft. Minh Tốc", src: "https://files.catbox.moe/a9ut62.mp3" },
+            { title: "scott street (speed up)", artist: "phoebe bridgers", src: "https://files.catbox.moe/1hl7t5.mp3" },
+            { title: "Slipping Through My Fingers", artist: "ABBA", src: "https://files.catbox.moe/wrcbf5.mp3" },
+            { title: "Cơn Mưa Rào Năm Ấy", artist: "The Cassette", src: "https://files.catbox.moe/w4gtgs.mp3" },
+            { title: "Viva La Vida", artist: "Coldplay", src: "https://files.catbox.moe/00opqo.mp3" },
+            { title: "See You Again", artist: "Wiz Khalifa ft. Charlie Puth", src: "https://files.catbox.moe/z7dhhj.mp3" }
+        ];
+
+        let currentTrackIndex = 0;
+        const audio = document.getElementById('audioPlayer');
+        const disc = document.getElementById('vinyl');
+        const mainPlayBtn = document.getElementById('mainPlayBtn');
+        const currentTitle = document.getElementById('currentTitle');
+        const currentArtist = document.getElementById('currentArtist');
+        const playlistContainer = document.getElementById('playlistContainer');
+
+        // Hàm tự động dựng giao diện danh sách 19 bài ra màn hình
+        function buildPlaylistUI() {
+            playlistContainer.innerHTML = "";
+            playlist.forEach((track, index) => {
+                const num = String(index + 1).padStart(2, '0');
+                const trackHTML = `
+                    <div class="track-item ${index === 0 ? 'active' : ''}" onclick="switchTrack(${index})">
+                        <div class="track-name"><span>${num}.</span> ${track.title}</div>
+                        <div class="track-artist">${track.artist}</div>
+                    </div>
+                `;
+                playlistContainer.innerHTML += trackHTML;
+            });
+        }
+
+        // Hàm tải bài hát lên trình phát
+        function loadTrack(index) {
+            currentTrackIndex = index;
+            audio.src = playlist[index].src;
+            currentTitle.innerText = playlist[index].title;
+            currentArtist.innerText = playlist[index].artist;
+            
+            // Cập nhật dòng đang phát sáng đèn trong danh sách công cộng
+            const items = document.querySelectorAll('.track-item');
+            items.forEach((item, i) => {
+                if (i === index) item.classList.add('active');
+                else item.classList.remove('active');
+            });
+        }
+
+        // Điều khiển Bật/Dừng đĩa nhạc nhanh
+        function togglePlayPause() {
+            if (audio.paused) {
+                audio.play();
                 disc.style.animationPlayState = 'running';
+                mainPlayBtn.innerHTML = '❚❚';
             } else {
+                audio.pause();
                 disc.style.animationPlayState = 'paused';
+                mainPlayBtn.innerHTML = '▶';
             }
-            // Do chính sách bảo mật trình duyệt, bạn bè vẫn cần bấm trực tiếp nút Play nhỏ của Spotify nếu muốn nghe tiếng, nhưng giao diện gốc đã được giấu siêu gọn gàng!
+        }
+
+        // Khi bấm chọn hẳn một bài trong danh sách xổ xuống
+        function switchTrack(index) {
+            loadTrack(index);
+            audio.play();
+            disc.style.animationPlayState = 'running';
+            mainPlayBtn.innerHTML = '❚❚';
+        }
+
+        // Điều khiển hiệu ứng ẨN/HIỆN mượt mà danh sách nhạc khi bấm icon ☰
+        function togglePlaylistView() {
+            playlistContainer.classList.toggle('show');
+        }
+
+        // TỰ ĐỘNG NHẢY BÀI TIẾP THEO KHI HẾT NHẠC 👑
+        audio.addEventListener('ended', function() {
+            let nextIndex = currentTrackIndex + 1;
+            if (nextIndex >= playlist.length) {
+                nextIndex = 0; // Hết cả 19 bài thì tự động quay về bài số 1 nha m
+            }
+            switchTrack(nextIndex);
+        });
+
+        // Chạy khởi tạo hệ thống ngay khi vừa mở trang web lên
+        window.onload = function() {
+            buildPlaylistUI();
+            loadTrack(0);
         }
     </script>
-
 </body>
 </html>
