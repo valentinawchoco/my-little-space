@@ -25,7 +25,7 @@
             flex-direction: column;
             align-items: center;
             margin: 0;
-            padding: 60px 20px;
+            padding: 40px 15px;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
@@ -69,7 +69,7 @@
         .sp5 { top: 80%; left: 20%; --d: 7s; }
         .sp6 { top: 15%; right: 30%; --d: 3.5s; }
 
-        /* --- GIAO DIỆN MÁY PHÁT NHẠC MP3 CUSTOM --- */
+        /* --- GIAO DIỆN MÁY PHÁT NHẠC MP3 REPSONSIVE --- */
         .music-player-container {
             width: 100%;
             box-sizing: border-box;
@@ -88,6 +88,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 15px;
         }
 
         .player-left {
@@ -95,7 +96,7 @@
             align-items: center;
             gap: 18px;
             flex-grow: 1;
-            margin-right: 15px;
+            min-width: 0; /* Giúp chống tràn chữ */
         }
 
         .disc-wrapper {
@@ -150,6 +151,7 @@
             display: flex;
             flex-direction: column;
             flex-grow: 1;
+            min-width: 0; /* Ép phần text không được đẩy rộng vô hạn */
         }
 
         .song-info {
@@ -164,6 +166,9 @@
             font-style: italic;
             color: #ffe5ec;
             font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; /* Chữ dài tự động biến thành dấu ... */
         }
 
         .song-sub {
@@ -171,9 +176,12 @@
             color: #ffffff;
             opacity: 0.7;
             margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        /* --- CỤM THANH TUA NHẠC VÀ THỜI GIAN KHỚP VIBE --- */
+        /* --- CỤM THANH TUA NHẠC VÀ THỜI GIAN --- */
         .progress-container {
             display: flex;
             align-items: center;
@@ -202,22 +210,16 @@
             background: #ffe5ec;
             box-shadow: 0 0 5px #ff85a1;
             cursor: pointer;
-            transition: transform 0.1s;
-        }
-
-        .progress-bar::-webkit-slider-thumb:hover {
-            transform: scale(1.3);
         }
 
         .time-display {
             font-size: 0.75rem;
             font-family: var(--font-body);
             opacity: 0.8;
-            min-width: 70px;
-            text-align: right;
+            white-space: nowrap;
         }
 
-        /* NÚT DANH SÁCH PHÁT (☰) XINH XẮN */
+        /* NÚT DANH SÁCH PHÁT (☰) */
         .playlist-toggle-btn {
             background: none;
             border: none;
@@ -228,11 +230,6 @@
             transition: all 0.2s;
             opacity: 0.8;
             flex-shrink: 0;
-        }
-
-        .playlist-toggle-btn:hover {
-            opacity: 1;
-            transform: scale(1.1);
         }
 
         /* KHUNG PLAYLIST ẨN HIỆN THÔNG MINH */
@@ -254,20 +251,10 @@
             border-top: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        /* Custom thanh cuộn dọc hợp vibe đen hồng */
-        .playlist-tracks::-webkit-scrollbar {
-            width: 5px;
-        }
-        .playlist-tracks::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 10px;
-        }
-        .playlist-tracks::-webkit-scrollbar-thumb {
-            background: rgba(255, 179, 193, 0.4);
-            border-radius: 10px;
-        }
+        .playlist-tracks::-webkit-scrollbar { width: 5px; }
+        .playlist-tracks::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
+        .playlist-tracks::-webkit-scrollbar-thumb { background: rgba(255, 179, 193, 0.4); border-radius: 10px; }
 
-        /* TỪNG DÒNG BÀI HÁT TRONG DANH SÁCH */
         .track-item {
             display: flex;
             align-items: center;
@@ -278,38 +265,14 @@
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 0.9rem;
+            gap: 10px;
         }
 
-        .track-item:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateX(3px);
-        }
+        .track-item:hover { background: rgba(255, 255, 255, 0.15); }
+        .track-item.active { background: rgba(255, 133, 161, 0.3); border: 1px solid rgba(255, 255, 255, 0.2); font-weight: bold; color: #ffe5ec; }
 
-        .track-item.active {
-            background: rgba(255, 133, 161, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            font-weight: bold;
-            color: #ffe5ec;
-        }
-
-        .track-name {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            max-width: 70%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .track-artist {
-            font-size: 0.8rem;
-            opacity: 0.6;
-            max-width: 25%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
+        .track-name { flex-grow: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .track-artist { font-size: 0.8rem; opacity: 0.6; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 40%; }
 
         /* --- CẤU TRÚC NỘI DUNG --- */
         .container {
@@ -321,21 +284,19 @@
 
         h1 {
             font-family: var(--font-main);
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-style: italic;
             font-weight: 600;
             color: #ffb3c1; 
             margin-bottom: 10px;
             text-shadow: 0 0 15px rgba(255, 179, 193, 0.4);
-            letter-spacing: 1px;
         }
 
         .quote {
             font-family: var(--font-quote);
             font-style: italic;
-            font-size: 1.4rem;
-            margin-bottom: 40px;
-            letter-spacing: 0.5px;
+            font-size: 1.3rem;
+            margin-bottom: 30px;
             opacity: 0.9;
         }
 
@@ -343,17 +304,46 @@
             width: 100%;
             background: rgba(255, 255, 255, 0.98);
             border-radius: 25px;
-            padding: 15px;
+            padding: 10px;
             box-sizing: border-box;
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         }
 
         .footer {
-            margin-top: 50px;
+            margin-top: 40px;
             font-size: 0.8rem;
             color: #7a5980;
             opacity: 0.8;
             font-style: italic;
+        }
+
+        /* ================= MOBILE RESPONSIVE (TỐI ƯU CHO ĐIỆN THOẠI) ================= */
+        @media (max-width: 480px) {
+            h1 { font-size: 2.3rem; }
+            .quote { font-size: 1.1rem; margin-bottom: 20px; }
+            
+            body { padding: 25px 10px; }
+            .music-player-container { padding: 15px; }
+
+            /* Xếp dọc các thành phần trên điện thoại để không bị lòi gạch */
+            .player-layout {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .player-left {
+                width: 100%;
+            }
+
+            /* Đẩy icon danh sách xuống dưới nằm giữa cho cân đối */
+            .playlist-toggle-btn {
+                align-self: center;
+                padding: 2px;
+                font-size: 1.4rem;
+            }
+
+            .track-item { font-size: 0.85rem; padding: 8px 10px; }
         }
     </style>
 </head>
@@ -373,11 +363,11 @@
         <h1>my memory book 2326</h1>
         <p class="quote">"souls don't meet by accident."</p>
 
-        <!-- CHIẾC MÁY PHÁT NHẠC PLAYLIST 18 BÀI CÓ THANH TUA NHẠC -->
+        <!-- CHIẾC MÁY PHÁT NHẠC PLAYLIST 18 BÀI -->
         <div class="music-player-container">
             <div class="player-layout">
                 <div class="player-left">
-                    <!-- Khu vực Đĩa nhạc bấm phát/dừng nhanh -->
+                    <!-- Đĩa nhạc -->
                     <div class="disc-wrapper" onclick="togglePlayPause()">
                         <div class="vinyl-disc" id="vinyl">
                             <img src="https://i.postimg.cc/Nf8G22Ls/46a115939de2ffaf489e4a098ceb36de.jpg" alt="music disc">
@@ -385,7 +375,7 @@
                         <div class="play-btn" id="mainPlayBtn">▶</div>
                     </div>
                     
-                    <!-- Khung thông tin bài hát + Thanh điều chỉnh tiến trình -->
+                    <!-- Khung thông tin bài hát + Thanh tiến trình -->
                     <div class="song-info-wrapper">
                         <div class="song-info">
                             <span class="song-title" id="currentTitle">Đang chuẩn bị nhạc...</span>
@@ -400,18 +390,18 @@
                     </div>
                 </div>
                 
-                <!-- Icon ☰ Thần thánh điều khiển ẩn/hiện danh sách -->
+                <!-- Icon ☰ điều khiển ẩn/hiện danh sách -->
                 <button class="playlist-toggle-btn" onclick="togglePlaylistView()">☰</button>
             </div>
 
-            <!-- DANH SÁCH 18 BÀI HÁT TỰ ĐỘNG KHỞI TẠO BẰNG CODE -->
+            <!-- DANH SÁCH 18 BÀI HÁT TỰ ĐỘNG KHỞI TẠO -->
             <div class="playlist-tracks" id="playlistContainer"></div>
 
             <!-- Thẻ Audio ẩn để phát nhạc -->
             <audio id="audioPlayer"></audio>
         </div>
 
-        <p style="font-family: 'EB Garamond', serif; color: #ffffff; font-weight: bold; margin-bottom: 20px; font-style: italic; opacity: 0.9; font-size: 1.3rem;">˗ˏˋ cảm ơn tình yêu đã ghé thăm ˎˊ˗</p>
+        <p style="font-family: 'EB Garamond', serif; color: #ffffff; font-weight: bold; margin-bottom: 20px; font-style: italic; opacity: 0.9; font-size: 1.2rem;">˗ˏˋ cảm ơn tình yêu đã ghé thăm ˎˊ˗</p>
 
         <!-- Khung điền Google Form -->
         <div class="form-box">
@@ -421,7 +411,7 @@
         <div class="footer">made with ♡ by nấm</div>
     </div>
 
-    <!-- ĐOẠN JAVASCRIPT XỬ LÝ NHẠC VÀ THANH TUA -->
+    <!-- SỬA ĐỔI JAVASCRIPT: DANH SÁCH CHUẨN 18 BÀI -->
     <script>
         const playlist = [
             { title: "A Little Dream Of Me", artist: "Công Dương, Thảo Tâm, 30 Pictures", src: "https://files.catbox.moe/fyugsw.mp3" },
@@ -474,7 +464,6 @@
             currentTitle.innerText = playlist[index].title;
             currentArtist.innerText = playlist[index].artist;
             
-            // Đặt lại thanh tua và thời gian khi đổi bài
             progressBar.value = 0;
             timeDisplay.innerText = "00:00 / 00:00";
 
@@ -502,16 +491,13 @@
             audio.play().then(() => {
                 disc.style.animationPlayState = 'running';
                 mainPlayBtn.innerHTML = '❚❚';
-            }).catch(err => console.log("Chờ người dùng tương tác để phát nhạc: ", err));
+            }).catch(err => console.log("User interaction required: ", err));
         }
 
         function togglePlaylistView() {
             playlistContainer.classList.toggle('show');
         }
 
-        // --- CÁC HÀM XỬ LÝ THANH TUA NHẠC VÀ THỜI GIAN ---
-        
-        // Định dạng số giây thành kiểu phút:giây (00:00)
         function formatTime(seconds) {
             if (isNaN(seconds)) return "00:00";
             const mins = Math.floor(seconds / 60);
@@ -519,22 +505,18 @@
             return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
         }
 
-        // Cập nhật thanh trượt và số giây chạy liên tục khi nhạc phát
         audio.addEventListener('timeupdate', () => {
             if (audio.duration) {
                 const progressPercentage = (audio.currentTime / audio.duration) * 100;
                 progressBar.value = progressPercentage;
-                
                 timeDisplay.innerText = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
             }
         });
 
-        // Đợi nhạc load xong dữ liệu để lấy tổng thời lượng bài hát chuẩn xác
         audio.addEventListener('loadedmetadata', () => {
             timeDisplay.innerText = `00:00 / ${formatTime(audio.duration)}`;
         });
 
-        // Hàm xử lý khi Nấm tự lấy ngón tay/chuột kéo tua trên thanh progressBar
         function seekTrack() {
             if (audio.duration) {
                 const seekTo = (progressBar.value / 100) * audio.duration;
@@ -542,12 +524,9 @@
             }
         }
 
-        // TỰ ĐỘNG NHẢY BÀI TIẾP THEO KHI HẾT NHẠC
         audio.addEventListener('ended', function() {
             let nextIndex = currentTrackIndex + 1;
-            if (nextIndex >= playlist.length) {
-                nextIndex = 0;
-            }
+            if (nextIndex >= playlist.length) nextIndex = 0;
             switchTrack(nextIndex);
         });
 
