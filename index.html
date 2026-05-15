@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>my memory book 2326 🌸</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&family=EB+Garamond:ital,wght@0,400;1,400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <title>my yearbook 2326 🌸</title>
+    
+    <!-- Link tải các Font chữ xịn (Cormorant giống IvyMode và EB Garamond) -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --font-main: "Playfair Display", serif;
+            --font-main: "Cormorant Garamond", serif; /* Vibe IvyMode sang chảnh */
             --font-body: "Nunito", sans-serif;
+            --font-quote: "EB Garamond", serif;       /* Vibe hoài niệm, hợp tiếng Việt */
             --sparkle-color: #ffe5ec;
         }
 
@@ -43,7 +46,6 @@
             opacity: 0;
         }
 
-        /* Tạo dáng sao 4 cánh bằng CSS */
         .sparkle:before, .sparkle:after {
             content: "";
             position: absolute;
@@ -67,7 +69,6 @@
             50% { transform: scale(1) rotate(90deg); opacity: 0.8; }
         }
 
-        /* Vị trí các ngôi sao ✨ */
         .sp1 { top: 10%; left: 15%; --d: 4s; }
         .sp2 { top: 25%; right: 10%; --d: 5s; }
         .sp3 { top: 45%; left: 8%; --d: 6s; }
@@ -75,7 +76,84 @@
         .sp5 { top: 80%; left: 20%; --d: 7s; }
         .sp6 { top: 15%; right: 30%; --d: 3.5s; }
 
-        /* --- NỘI DUNG --- */
+        /* --- GIAO DIỆN MÁY PHÁT NHẠC CUTE --- */
+        .music-player-container {
+            width: 100%;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px 0 rgba(255, 133, 161, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: left;
+        }
+
+        .player-layout {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .disc-wrapper {
+            position: relative;
+            width: 50px;
+            height: 50px;
+        }
+
+        .vinyl-disc {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #111;
+            overflow: hidden;
+            border: 2px solid #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            animation: rotateDisc 8s linear infinite;
+        }
+
+        .vinyl-disc img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes rotateDisc {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .song-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .song-title {
+            font-family: var(--font-main);
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #ffe5ec;
+            font-weight: bold;
+        }
+
+        .song-sub {
+            font-size: 0.8rem;
+            color: #ffffff;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        .spotify-embed-wrapper {
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 5px;
+            opacity: 0.95;
+        }
+
+        /* --- CẤU TRÚC NỘI DUNG --- */
         .container {
             width: 100%;
             max-width: 650px;
@@ -85,27 +163,22 @@
 
         h1 {
             font-family: var(--font-main);
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-style: italic;
-            font-weight: 400;
+            font-weight: 300;
             color: #ffb3c1; 
             margin-bottom: 10px;
-            text-shadow: 0 0 20px rgba(255, 179, 193, 0.6);
+            text-shadow: 0 0 15px rgba(255, 179, 193, 0.4);
+            letter-spacing: 1px;
         }
 
         .quote {
-            font-family: 'EB Garamond', serif;
+            font-family: var(--font-quote);
             font-style: italic;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             margin-bottom: 40px;
-        }
-
-        .spotify-box {
-            width: 100%;
-            margin-bottom: 40px;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            letter-spacing: 0.5px;
+            opacity: 0.9;
         }
 
         .form-box {
@@ -113,6 +186,7 @@
             background: rgba(255, 255, 255, 0.98);
             border-radius: 25px;
             padding: 15px;
+            box-sizing: border-box;
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         }
 
@@ -127,6 +201,7 @@
 </head>
 <body>
 
+    <!-- Các ngôi sao phát sáng phía sau -->
     <div class="sparkle-container">
         <div class="sparkle sp1"></div>
         <div class="sparkle sp2"></div>
@@ -137,16 +212,37 @@
     </div>
 
     <div class="container">
-        <h1>my memory book 2326</h1>
+        <!-- Tiêu đề phong cách IvyMode -->
+        <h1>my yearbook 2326</h1>
+        
+        <!-- Câu quote phong cách EB Garamond -->
         <p class="quote">"souls don't meet by accident."</p>
 
-        <div class="spotify-box">
-            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5cKfvCrk8D8sxTz4CYHDFX?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <!-- Trình phát nhạc Đĩa Than Cute -->
+        <div class="music-player-container">
+            <div class="player-layout">
+                <div class="disc-wrapper">
+                    <div class="vinyl-disc">
+                        <!-- Hình ảnh đĩa nhạc nhỏ cute (cậu có thể đổi link ảnh nếu thích) -->
+                        <img src="https://i.postimg.cc/yd0k8QZ0/74284b6959df0fd02d9b7f2447ac515e.jpg" alt="music disc">
+                    </div>
+                </div>
+                <div class="song-info">
+                    <span class="song-title">eulogy for 2026 🎧</span>
+                    <span class="song-sub">bấm nút play ở dưới để nghe nhạc nền nha...</span>
+                </div>
+            </div>
+            <div class="spotify-embed-wrapper">
+                <iframe id="spotify-iframe" src="https://open.spotify.com/embed/playlist/5cKfvCrk8D8sxTz4CYHDFX?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
         </div>
 
-<p style="font-family: 'EB Garamond', serif; color: #ffffff; font-weight: bold; margin-bottom: 20px; font-style: italic; opacity: 0.9; font-size: 1.3rem;">˗ˏˋ cảm ơn tình yêu đã ghé thăm ˎˊ˗</p>
+        <!-- Dòng chữ cảm ơn phong cách EB Garamond Italic Đậm -->
+        <p style="font-family: 'EB Garamond', serif; color: #ffffff; font-weight: bold; margin-bottom: 20px; font-style: italic; opacity: 0.9; font-size: 1.3rem;">˗ˏˋ cảm ơn tình yêu đã ghé thăm ˎˊ˗</p>
+
+        <!-- Khung điền Google Form -->
         <div class="form-box">
-            <!-- NẤM DÁN LINK GOOGLE FORM VÀO ĐÂY NHÉ -->
+            <!-- NẤM NHỚ THAY LINK GOOGLE FORM CỦA CẬU VÀO ĐÂY NHÉ -->
             <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd7WfwkEaRD3xDuzbQ9136JOD6mzlWDCcHDeJsIzJnQINDR3A/viewform" width="100%" height="1000" frameborder="0">Đang tải...</iframe>
         </div>
 
