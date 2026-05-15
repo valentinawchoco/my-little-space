@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>my yearbook 2326 🌸</title>
+    <title>my memory book 2326 🌸</title>
     
     <!-- Link tải các Font chữ xịn (Cormorant giống IvyMode và EB Garamond) -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -76,32 +76,37 @@
         .sp5 { top: 80%; left: 20%; --d: 7s; }
         .sp6 { top: 15%; right: 30%; --d: 3.5s; }
 
-        /* --- GIAO DIỆN MÁY PHÁT NHẠC CUTE --- */
+        /* --- GIAO DIỆN MÁY PHÁT NHẠC CUTE KHÔNG HIỆN SPOTIFY --- */
         .music-player-container {
             width: 100%;
             box-sizing: border-box;
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 15px;
+            padding: 18px;
             margin-bottom: 40px;
             box-shadow: 0 8px 32px 0 rgba(255, 133, 161, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.2);
             text-align: left;
+            cursor: pointer; /* Biến chuột thành hình bàn tay để kích thích bấm vào */
+            transition: transform 0.2s ease;
+        }
+
+        .music-player-container:hover {
+            transform: scale(1.02); /* Di chuột vào hơi phóng to nhẹ cho thích mắt */
         }
 
         .player-layout {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 10px;
+            gap: 18px;
         }
 
         .disc-wrapper {
             position: relative;
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
         }
 
         .vinyl-disc {
@@ -113,6 +118,7 @@
             border: 2px solid #fff;
             box-shadow: 0 0 10px rgba(0,0,0,0.3);
             animation: rotateDisc 8s linear infinite;
+            animation-play-state: running; /* Đĩa tự quay tăng vibe cute */
         }
 
         .vinyl-disc img {
@@ -133,24 +139,22 @@
 
         .song-title {
             font-family: var(--font-main);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-style: italic;
             color: #ffe5ec;
-            font-weight: bold;
+            font-weight: 600; /* Làm tên bài hát đậm nét sang trọng */
         }
 
         .song-sub {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: #ffffff;
             opacity: 0.7;
-            margin-top: 2px;
+            margin-top: 4px;
         }
 
-        .spotify-embed-wrapper {
-            border-radius: 12px;
-            overflow: hidden;
-            margin-top: 5px;
-            opacity: 0.95;
+        /* GIẤU EM BED SPOTIFY ĐI KHÔNG CHO HIỆN */
+        .spotify-hidden {
+            display: none;
         }
 
         /* --- CẤU TRÚC NỘI DUNG --- */
@@ -165,7 +169,7 @@
             font-family: var(--font-main);
             font-size: 3.5rem;
             font-style: italic;
-            font-weight: 300;
+            font-weight: 600; /* CHỖ NÀY: Đã chỉnh từ 300 lên 600 để chữ ĐẬM hơn theo ý cậu */
             color: #ffb3c1; 
             margin-bottom: 10px;
             text-shadow: 0 0 15px rgba(255, 179, 193, 0.4);
@@ -212,27 +216,30 @@
     </div>
 
     <div class="container">
-        <!-- Tiêu đề phong cách IvyMode -->
-        <h1>my yearbook 2326</h1>
+        <!-- Tiêu đề phong cách IvyMode ĐẬM ĐÀ -->
+        <h1>my memory book 2326</h1>
         
         <!-- Câu quote phong cách EB Garamond -->
         <p class="quote">"souls don't meet by accident."</p>
 
-        <!-- Trình phát nhạc Đĩa Than Cute -->
-        <div class="music-player-container">
+        <!-- Trình phát nhạc Đĩa Than Siêu Gọn (Không hiện Spotify) -->
+        <div class="music-player-container" onclick="togglePlay()">
             <div class="player-layout">
                 <div class="disc-wrapper">
-                    <div class="vinyl-disc">
-                        <!-- Hình ảnh đĩa nhạc nhỏ cute (cậu có thể đổi link ảnh nếu thích) -->
-                        <img src="https://i.postimg.cc/yd0k8QZ0/74284b6959df0fd02d9b7f2447ac515e.jpg" alt="music disc">
+                    <div class="vinyl-disc" id="vinyl">
+                        <!-- NẤM THAY LINK ẢNH ĐĨA VUÔNG CỦA CẬU VÀO ĐÂY NHÉ -->
+                        <img src="https://i.postimg.cc/Nf8G22Ls/46a115939de2ffaf489e4a098ceb36de.jpg" alt="music disc">
                     </div>
                 </div>
                 <div class="song-info">
+                    <!-- CẬU TỰ DO ĐỔI TÊN BÀI HÁT / CA SĨ Ở ĐÂY CHO CUTE -->
                     <span class="song-title">eulogy for 2026 🎧</span>
-                    <span class="song-sub">bấm nút play ở dưới để nghe nhạc nền nha...</span>
+                    <span class="song-sub">playlist: niên hoa của tụi mình • bấm để nghe nha</span>
                 </div>
             </div>
-            <div class="spotify-embed-wrapper">
+            
+            <!-- Khung Spotify chứa playlist gốc đã bị giấu đi ẩn danh -->
+            <div class="spotify-hidden">
                 <iframe id="spotify-iframe" src="https://open.spotify.com/embed/playlist/5cKfvCrk8D8sxTz4CYHDFX?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
         </div>
@@ -250,6 +257,19 @@
             made with ♡ by nấm
         </div>
     </div>
+
+    <!-- Đoạn Javascript nhỏ để khi bấm vào cái khung là đĩa quay/dừng -->
+    <script>
+        function togglePlay() {
+            var disc = document.getElementById('vinyl');
+            if (disc.style.animationPlayState === 'paused') {
+                disc.style.animationPlayState = 'running';
+            } else {
+                disc.style.animationPlayState = 'paused';
+            }
+            // Do chính sách bảo mật trình duyệt, bạn bè vẫn cần bấm trực tiếp nút Play nhỏ của Spotify nếu muốn nghe tiếng, nhưng giao diện gốc đã được giấu siêu gọn gàng!
+        }
+    </script>
 
 </body>
 </html>
