@@ -87,13 +87,15 @@
         .player-layout {
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Đẩy tên bài và nút playlist ra 2 đầu cực đẹp */
+            justify-content: space-between;
         }
 
         .player-left {
             display: flex;
             align-items: center;
             gap: 18px;
+            flex-grow: 1;
+            margin-right: 15px;
         }
 
         .disc-wrapper {
@@ -104,6 +106,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         .vinyl-disc {
@@ -143,9 +146,16 @@
             to { transform: rotate(360deg); }
         }
 
+        .song-info-wrapper {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
         .song-info {
             display: flex;
             flex-direction: column;
+            margin-bottom: 8px;
         }
 
         .song-title {
@@ -163,6 +173,50 @@
             margin-top: 2px;
         }
 
+        /* --- CỤM THANH TUA NHẠC VÀ THỜI GIAN KHỚP VIBE --- */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .progress-bar {
+            flex-grow: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 5px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            outline: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .progress-bar::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ffe5ec;
+            box-shadow: 0 0 5px #ff85a1;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .progress-bar::-webkit-slider-thumb:hover {
+            transform: scale(1.3);
+        }
+
+        .time-display {
+            font-size: 0.75rem;
+            font-family: var(--font-body);
+            opacity: 0.8;
+            min-width: 70px;
+            text-align: right;
+        }
+
         /* NÚT DANH SÁCH PHÁT (☰) XINH XẮN */
         .playlist-toggle-btn {
             background: none;
@@ -173,6 +227,7 @@
             padding: 5px 10px;
             transition: all 0.2s;
             opacity: 0.8;
+            flex-shrink: 0;
         }
 
         .playlist-toggle-btn:hover {
@@ -185,16 +240,15 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            max-height: 0px; /* Mặc định ẩn hoàn toàn */
+            max-height: 0px;
             overflow-y: auto;
-            transition: max-height 0.4s ease-out, margin-top 0.4s ease-out; /* Tạo hiệu ứng lướt cực mịn */
+            transition: max-height 0.4s ease-out, margin-top 0.4s ease-out;
             padding-right: 5px;
             margin-top: 0px;
         }
 
-        /* Lớp này dùng để kích hoạt mở rộng playlist khi bấm nút ☰ */
         .playlist-tracks.show {
-            max-height: 220px; /* Chiều cao tối đa vừa xinh cho thanh cuộn */
+            max-height: 220px;
             margin-top: 15px;
             padding-top: 15px;
             border-top: 1px solid rgba(255, 255, 255, 0.15);
@@ -319,22 +373,30 @@
         <h1>my memory book 2326</h1>
         <p class="quote">"souls don't meet by accident."</p>
 
-        <!-- CHIẾC MÁY PHÁT NHẠC PLAYLIST 19 BÀI SIÊU ẨN GIẤU -->
+        <!-- CHIẾC MÁY PHÁT NHẠC PLAYLIST 18 BÀI CÓ THANH TUA NHẠC -->
         <div class="music-player-container">
             <div class="player-layout">
                 <div class="player-left">
                     <!-- Khu vực Đĩa nhạc bấm phát/dừng nhanh -->
                     <div class="disc-wrapper" onclick="togglePlayPause()">
                         <div class="vinyl-disc" id="vinyl">
-                            <!-- NẤM THAY LINK ẢNH ĐĨA VUÔNG CỦA CẬU VÀO ĐÂY NHÉ -->
                             <img src="https://i.postimg.cc/Nf8G22Ls/46a115939de2ffaf489e4a098ceb36de.jpg" alt="music disc">
                         </div>
                         <div class="play-btn" id="mainPlayBtn">▶</div>
                     </div>
-                    <!-- Thông tin bài hát hiện tại -->
-                    <div class="song-info">
-                        <span class="song-title" id="currentTitle">Đang chuẩn bị nhạc...</span>
-                        <span class="song-sub" id="currentArtist">đợi xíu nha tình yêu</span>
+                    
+                    <!-- Khung thông tin bài hát + Thanh điều chỉnh tiến trình -->
+                    <div class="song-info-wrapper">
+                        <div class="song-info">
+                            <span class="song-title" id="currentTitle">Đang chuẩn bị nhạc...</span>
+                            <span class="song-sub" id="currentArtist">đợi xíu nha tình yêu</span>
+                        </div>
+                        
+                        <!-- Thanh kéo chỉnh nhạc & Thời gian -->
+                        <div class="progress-container">
+                            <input type="range" class="progress-bar" id="progressBar" value="0" min="0" max="100" oninput="seekTrack()">
+                            <span class="time-display" id="timeDisplay">00:00 / 00:00</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -342,10 +404,8 @@
                 <button class="playlist-toggle-btn" onclick="togglePlaylistView()">☰</button>
             </div>
 
-            <!-- DANH SÁCH 19 BÀI HÁT TỰ ĐỘNG KHỞI TẠO BẰNG CODE (CÓ THANH CUỘN ẨN) -->
-            <div class="playlist-tracks" id="playlistContainer">
-                <!-- Javascript sẽ tự động điền 19 bài hát của cậu vào đây, không cần gõ tay mỏi tay đâu -->
-            </div>
+            <!-- DANH SÁCH 18 BÀI HÁT TỰ ĐỘNG KHỞI TẠO BẰNG CODE -->
+            <div class="playlist-tracks" id="playlistContainer"></div>
 
             <!-- Thẻ Audio ẩn để phát nhạc -->
             <audio id="audioPlayer"></audio>
@@ -355,23 +415,20 @@
 
         <!-- Khung điền Google Form -->
         <div class="form-box">
-            <!-- NẤM NHỚ THAY LINK GOOGLE FORM CỦA CẬU VÀO ĐÂY NHÉ -->
             <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd7WfwkEaRD3xDuzbQ9136JOD6mzlWDCcHDeJsIzJnQINDR3A/viewform" width="100%" height="1000" frameborder="0">Đang tải...</iframe>
         </div>
 
         <div class="footer">made with ♡ by nấm</div>
     </div>
 
-    <!-- ĐOẠN JAVASCRIPT THÔNG MINH XỬ LÝ 19 BÀI HÁT CỦA NẤM -->
+    <!-- ĐOẠN JAVASCRIPT XỬ LÝ NHẠC VÀ THANH TUA -->
     <script>
-        // Kho dữ liệu 19 bài hát tâm huyết của Nấm
         const playlist = [
             { title: "A Little Dream Of Me", artist: "Công Dương, Thảo Tâm, 30 Pictures", src: "https://files.catbox.moe/fyugsw.mp3" },
             { title: "Space Song", artist: "Beach House", src: "https://files.catbox.moe/wr7irw.mp3" },
             { title: "Cảm ơn người đã thức cùng tôi", artist: "Phùng Khánh Linh, 30 Pictures", src: "https://files.catbox.moe/gjwc2t.mp3" },
             { title: "Champagne Coast (Piano)", artist: "Valentino Coleman", src: "https://files.catbox.moe/idm15y.mp3" },
             { title: "có hẹn với thanh xuân", artist: "MONSTAR", src: "https://files.catbox.moe/x9boe1.mp3" },
-            { title: "Innocence [Remastered]", artist: "Daniel Caesar", src: "https://files.catbox.moe/0g9vnv.mp3" },
             { title: "Di Na Muli THAT Part", artist: "Itchyworms", src: "https://files.catbox.moe/pkapxa.mp3" },
             { title: "End Of Beginning", artist: "Djo", src: "https://files.catbox.moe/lkurqw.mp3" },
             { title: "Where'd All The Time Go", artist: "Dr. Dog", src: "https://files.catbox.moe/kdlk9l.mp3" },
@@ -394,8 +451,9 @@
         const currentTitle = document.getElementById('currentTitle');
         const currentArtist = document.getElementById('currentArtist');
         const playlistContainer = document.getElementById('playlistContainer');
+        const progressBar = document.getElementById('progressBar');
+        const timeDisplay = document.getElementById('timeDisplay');
 
-        // Hàm tự động dựng giao diện danh sách 19 bài ra màn hình
         function buildPlaylistUI() {
             playlistContainer.innerHTML = "";
             playlist.forEach((track, index) => {
@@ -410,14 +468,16 @@
             });
         }
 
-        // Hàm tải bài hát lên trình phát
         function loadTrack(index) {
             currentTrackIndex = index;
             audio.src = playlist[index].src;
             currentTitle.innerText = playlist[index].title;
             currentArtist.innerText = playlist[index].artist;
             
-            // Cập nhật dòng đang phát sáng đèn trong danh sách công cộng
+            // Đặt lại thanh tua và thời gian khi đổi bài
+            progressBar.value = 0;
+            timeDisplay.innerText = "00:00 / 00:00";
+
             const items = document.querySelectorAll('.track-item');
             items.forEach((item, i) => {
                 if (i === index) item.classList.add('active');
@@ -425,7 +485,6 @@
             });
         }
 
-        // Điều khiển Bật/Dừng đĩa nhạc nhanh
         function togglePlayPause() {
             if (audio.paused) {
                 audio.play();
@@ -438,29 +497,60 @@
             }
         }
 
-        // Khi bấm chọn hẳn một bài trong danh sách xổ xuống
         function switchTrack(index) {
             loadTrack(index);
-            audio.play();
-            disc.style.animationPlayState = 'running';
-            mainPlayBtn.innerHTML = '❚❚';
+            audio.play().then(() => {
+                disc.style.animationPlayState = 'running';
+                mainPlayBtn.innerHTML = '❚❚';
+            }).catch(err => console.log("Chờ người dùng tương tác để phát nhạc: ", err));
         }
 
-        // Điều khiển hiệu ứng ẨN/HIỆN mượt mà danh sách nhạc khi bấm icon ☰
         function togglePlaylistView() {
             playlistContainer.classList.toggle('show');
         }
 
-        // TỰ ĐỘNG NHẢY BÀI TIẾP THEO KHI HẾT NHẠC 👑
+        // --- CÁC HÀM XỬ LÝ THANH TUA NHẠC VÀ THỜI GIAN ---
+        
+        // Định dạng số giây thành kiểu phút:giây (00:00)
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return "00:00";
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        // Cập nhật thanh trượt và số giây chạy liên tục khi nhạc phát
+        audio.addEventListener('timeupdate', () => {
+            if (audio.duration) {
+                const progressPercentage = (audio.currentTime / audio.duration) * 100;
+                progressBar.value = progressPercentage;
+                
+                timeDisplay.innerText = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+            }
+        });
+
+        // Đợi nhạc load xong dữ liệu để lấy tổng thời lượng bài hát chuẩn xác
+        audio.addEventListener('loadedmetadata', () => {
+            timeDisplay.innerText = `00:00 / ${formatTime(audio.duration)}`;
+        });
+
+        // Hàm xử lý khi Nấm tự lấy ngón tay/chuột kéo tua trên thanh progressBar
+        function seekTrack() {
+            if (audio.duration) {
+                const seekTo = (progressBar.value / 100) * audio.duration;
+                audio.currentTime = seekTo;
+            }
+        }
+
+        // TỰ ĐỘNG NHẢY BÀI TIẾP THEO KHI HẾT NHẠC
         audio.addEventListener('ended', function() {
             let nextIndex = currentTrackIndex + 1;
             if (nextIndex >= playlist.length) {
-                nextIndex = 0; // Hết cả 19 bài thì tự động quay về bài số 1 nha m
+                nextIndex = 0;
             }
             switchTrack(nextIndex);
         });
 
-        // Chạy khởi tạo hệ thống ngay khi vừa mở trang web lên
         window.onload = function() {
             buildPlaylistUI();
             loadTrack(0);
